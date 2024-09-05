@@ -20,9 +20,9 @@ const Story = () => {
       <div className="container flex justify-center">
         <div className="flex flex-col w-[70%] bg-white min-h-screen p-10">
           <div className="text-lg">
-            <Button variant={"link"}>
+            <Button variant={"link"} className="px-0">
               <Link to={"/"} className="flex gap-2 items-center">
-                <img src={left} alt="arrow left" className="size-6" />
+                <img src={left} alt="arrow left" className="size-4" />
                 <span>Back</span>
               </Link>
             </Button>
@@ -45,7 +45,7 @@ const Story = () => {
                   <CardDescription>{formatUnixTime(data.time)}</CardDescription>
                   <Upvotes upvotes={data.score} />
                 </div>
-                <Button variant={"link"} className="w-fit">
+                <Button variant={"link"} className="w-fit px-0">
                   <a href={data.url} rel="noopener noreferrer">
                     Read full article
                   </a>

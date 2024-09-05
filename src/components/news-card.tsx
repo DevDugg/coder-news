@@ -44,7 +44,9 @@ const NewsCard = ({ storyId }: NewsCardProps) => {
             </CardContent>
             <CardFooter className="flex justify-between items-center">
               <CardDescription>{data.descendants === 0 ? "No" : data.descendants} comment(s)</CardDescription>
-              <Button variant={"link"}>Read more</Button>
+              <Button variant={"link"} className="px-0">
+                Read more
+              </Button>
             </CardFooter>
           </Card>
         </Link>
