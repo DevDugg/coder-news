@@ -17,9 +17,11 @@ const LatestNews = () => {
           </Button>
         </div>
         {loading && (
-          <Card className="flex items-center justify-center w-1/2">
-            <Spinner />
-          </Card>
+          <div className="flex justify-center pt-10">
+            <Card className="flex items-center justify-center w-1/2 py-10">
+              <Spinner />
+            </Card>
+          </div>
         )}
         {error && (
           <Card>
