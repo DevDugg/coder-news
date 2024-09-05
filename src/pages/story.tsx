@@ -57,11 +57,12 @@ const Story = () => {
                   </Button>
                 </div>
                 <ul className="flex flex-col gap-4">
-                  {data.kids.map((commentId: number) => (
-                    <li key={commentId}>
-                      <Comment id={commentId} />
-                    </li>
-                  ))}
+                  {data.kids &&
+                    data.kids.map((commentId: number) => (
+                      <li key={commentId}>
+                        <Comment id={commentId} />
+                      </li>
+                    ))}
                 </ul>
               </div>
             )}
