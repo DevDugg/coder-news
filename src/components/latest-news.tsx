@@ -10,7 +10,7 @@ const LatestNews = () => {
   const { data, loading, error, refresh } = useFetch<any>({ path: routes.newStories, refresh: 60 });
   return (
     <section className="latest h-full" id="latest">
-      <div className="container flex flex-col gap-10">
+      <div className="flex flex-col gap-10">
         <div className="flex justify-center items-center pt-10">
           <Button onClick={refresh} disabled={loading}>
             Refresh

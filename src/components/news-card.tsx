@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import Spinner from "./spinner";
 import { Story } from "@/lib/models";
-import arrow from "@/assets/up.svg";
+import Upvotes from "./upvotes";
 import formatUnixTime from "@/lib/format-unix-time";
 import { routes } from "@/routes";
 import useFetch from "@/hooks/use-fetch";
@@ -33,10 +33,7 @@ const NewsCard = ({ storyId }: NewsCardProps) => {
         <Link to={`/item/${data.id}`}>
           <Card>
             <CardHeader className="flex justify-between">
-              <div className="flex items-center gap-2 mb-2">
-                <img src={arrow} alt="arrow up" className="size-3 object-contain" />
-                <CardDescription>{data.score}</CardDescription>
-              </div>
+              <Upvotes upvotes={data.score} />
               <CardTitle>{data.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex justify-between">
