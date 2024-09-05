@@ -14,7 +14,7 @@ import Comment from "@/components/comment";
 const Story = () => {
   const { id } = useParams();
 
-  const { data, loading, error } = useFetch<StoryType>({ path: routes.item(String(id)) });
+  const { data, loading, error, refresh } = useFetch<StoryType>({ path: routes.item(String(id)) });
   return (
     <main className="story">
       <div className="container flex justify-center">
@@ -38,7 +38,7 @@ const Story = () => {
                 <CardDescription className="text-red py-4">Error: {error}</CardDescription>
               </div>
             )}
-            {data && (
+            {data && !loading && (
               <div className="py-10 flex flex-col gap-6">
                 <CardTitle>{data.title}</CardTitle>
                 <div className="flex justify-between">
@@ -50,7 +50,12 @@ const Story = () => {
                     Read full article
                   </a>
                 </Button>
-                <CardDescription>{data.descendants === 0 ? "No" : data.descendants} comment(s)</CardDescription>
+                <div className="flex justify-between items-center">
+                  <CardDescription>{data.descendants === 0 ? "No" : data.descendants} comment(s)</CardDescription>
+                  <Button onClick={refresh} disabled={!data || loading}>
+                    Refresh
+                  </Button>
+                </div>
                 <ul className="flex flex-col gap-4">
                   {data.kids.map((commentId: number) => (
                     <li key={commentId}>

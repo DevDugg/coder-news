@@ -12,7 +12,7 @@ const LatestNews = () => {
     <section className="latest h-full" id="latest">
       <div className="flex flex-col gap-10">
         <div className="flex justify-center items-center pt-10">
-          <Button onClick={refresh} disabled={loading}>
+          <Button onClick={refresh} disabled={!data || loading}>
             Refresh
           </Button>
         </div>

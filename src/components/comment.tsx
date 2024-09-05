@@ -39,7 +39,7 @@ const Comment = ({ id, depth = 0 }: CommentProps) => {
       {data && !loading && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4 text-xs">
-            <CardDescription className="">{data.by}</CardDescription>
+            <CardDescription>{data.by}</CardDescription>
             <p className="text-sm" dangerouslySetInnerHTML={{ __html: data.text }} />
           </div>
           {data.kids && (
