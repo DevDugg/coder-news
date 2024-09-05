@@ -12,7 +12,8 @@ export default {
       colors: {
         black: "#0C0C0C",
         red: "#CC0000",
-        gray: "#F5F5F5",
+        lightgray: "#F5F5F5",
+        gray: "#CDCDCD",
       },
       keyframes: {
         "accordion-down": {

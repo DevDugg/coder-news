@@ -6,7 +6,7 @@ import Story from "./pages/story";
 
 function App() {
   return (
-    <div className="app font-inter bg-gray min-h-screen">
+    <div className="app font-inter bg-lightgray min-h-screen">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

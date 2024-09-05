@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/use-fetch";
+// Renamed this because conflicts with this component's name
 import { type Story as StoryType } from "@/lib/models";
 import { routes } from "@/routes";
 import { Link, useParams } from "react-router-dom";
 import left from "@/assets/left.svg";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import Spinner from "@/components/spinner";
 import formatUnixTime from "@/lib/format-unix-time";
 import Upvotes from "@/components/upvotes";
+import Comment from "@/components/comment";
 
 const Story = () => {
   const { id } = useParams();
@@ -16,7 +18,7 @@ const Story = () => {
   return (
     <main className="story">
       <div className="container flex justify-center">
-        <div className="flex flex-col w-1/2 bg-white h-screen p-10">
+        <div className="flex flex-col w-[70%] bg-white min-h-screen p-10">
           <div className="text-lg">
             <Button variant={"link"}>
               <Link to={"/"} className="flex gap-2 items-center">
@@ -48,6 +50,14 @@ const Story = () => {
                     Read full article
                   </a>
                 </Button>
+                <CardDescription>{data.descendants === 0 ? "No" : data.descendants} comment(s)</CardDescription>
+                <ul className="flex flex-col gap-4">
+                  {data.kids.map((commentId: number) => (
+                    <li key={commentId}>
+                      <Comment id={commentId} />
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>

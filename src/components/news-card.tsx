@@ -43,7 +43,7 @@ const NewsCard = ({ storyId }: NewsCardProps) => {
               <CardDescription>{formatUnixTime(data.time)}</CardDescription>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <CardDescription>{data.descendants} comments</CardDescription>
+              <CardDescription>{data.descendants === 0 ? "No" : data.descendants} comment(s)</CardDescription>
               <Button variant={"link"}>Read more</Button>
             </CardFooter>
           </Card>
