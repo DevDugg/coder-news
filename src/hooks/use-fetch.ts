@@ -1,48 +1,57 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import buildApiLink from "@/lib/build-api-link";
 import { useInView } from "react-intersection-observer";
 
-interface UseFetchOptions {
+interface UseFetchProps {
+  path: string;
   lazy?: boolean;
+  refresh?: number;
 }
 
-const useFetch = <Model>(path: string, options: UseFetchOptions = {}) => {
-  const { lazy = false } = options;
+const useFetch = <Model>({ path, lazy = false, refresh }: UseFetchProps) => {
   const [data, setData] = useState<Model | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(null);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
+
+  const url = buildApiLink(path);
 
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
-    fallbackInView: !lazy,
+    skip: !lazy,
+    fallbackInView: true,
   });
 
-  const url = buildApiLink(path);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await fetch(url);
       const result = await response.json();
       setData(result);
+      setHasFetched(true);
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [url]);
 
   useEffect(() => {
-    if (!lazy) {
-      fetchData();
-    } else if (inView) {
+    if (!lazy || (lazy && inView && !hasFetched)) {
       fetchData();
     }
-  }, [inView, url, lazy]);
 
-  return { data, loading, error, ref: lazy ? ref : null };
+    let interval: NodeJS.Timeout;
+    if (refresh && (!lazy || (lazy && hasFetched))) {
+      interval = setInterval(fetchData, refresh * 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [inView, lazy, refresh, fetchData, hasFetched]);
+
+  return { data, loading, error, ref, refresh: fetchData };
 };
 
 export default useFetch;

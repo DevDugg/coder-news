@@ -2,7 +2,7 @@ import LatestNews from "@/components/latest-news";
 
 const Home = () => {
   return (
-    <main className="home">
+    <main className="home h-full">
       <div className="container">
         <LatestNews />
       </div>

@@ -1,5 +1,11 @@
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+
+import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import Spinner from "./spinner";
 import { Story } from "@/lib/models";
+import arrow from "@/assets/up.svg";
+import formatUnixTime from "@/lib/format-unix-time";
 import { routes } from "@/routes";
 import useFetch from "@/hooks/use-fetch";
 
@@ -8,11 +14,45 @@ interface NewsCardProps {
 }
 
 const NewsCard = ({ storyId }: NewsCardProps) => {
-  const { data, loading, error } = useFetch<Story>(routes.item(String(storyId)));
+  const { data, loading, ref, error } = useFetch<Story>({ path: routes.item(String(storyId)), lazy: true });
+
   return (
-    <Link to={`/news/${storyId}`} className="news-card bg-white shadow rounded-md flex flex-col gap-4 p-4">
-      <h2 className="text-lg">{data?.title}</h2>
-    </Link>
+    <div ref={ref}>
+      {loading && (
+        <Card className="flex items-center justify-center py-10">
+          <Spinner />
+        </Card>
+      )}
+
+      {error && (
+        <Card>
+          <CardDescription className="text-red py-4">Error: {error}</CardDescription>
+        </Card>
+      )}
+      {data && (
+        <Link to={`/item/${data.id}`}>
+          <Card>
+            <CardHeader className="flex justify-between">
+              <div className="flex items-center gap-2 mb-2">
+                <img src={arrow} alt="arrow up" className="size-3 object-contain" />
+                <CardDescription>{data.score}</CardDescription>
+              </div>
+              <CardTitle>{data.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-between">
+              <CardDescription>
+                by <span className="text-black font-bold">{data.by}</span>
+              </CardDescription>
+              <CardDescription>{formatUnixTime(data.time)}</CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between items-center">
+              <CardDescription>{data.descendants} comments</CardDescription>
+              <Button variant={"link"}>Read more</Button>
+            </CardFooter>
+          </Card>
+        </Link>
+      )}
+    </div>
   );
 };
 export default NewsCard;
