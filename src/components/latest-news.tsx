@@ -18,7 +18,7 @@ const LatestNews = () => {
         </div>
         {loading && (
           <div className="flex justify-center pt-10">
-            <Card className="flex items-center justify-center w-[70%] py-10">
+            <Card className="flex items-center justify-center w-[70%] py-10 max-md:w-full">
               <Spinner />
             </Card>
           </div>
@@ -31,7 +31,7 @@ const LatestNews = () => {
         {data && !loading && (
           <ul className="flex flex-col gap-4 items-center py-10">
             {data.slice(0, 100).map((storyId: number) => (
-              <li key={storyId} className="w-[70%]">
+              <li key={storyId} className="w-[70%] max-md:w-full">
                 <NewsCard storyId={storyId} />
               </li>
             ))}
