@@ -18,7 +18,7 @@ const Story = () => {
   return (
     <main className="story">
       <div className="container flex justify-center">
-        <div className="flex flex-col w-[70%] bg-white min-h-screen p-10">
+        <div className="flex flex-col w-[70%] bg-white min-h-screen p-10 max-md:w-full">
           <div className="text-lg">
             <Button variant={"link"} className="px-0">
               <Link to={"/"} className="flex gap-2 items-center">
